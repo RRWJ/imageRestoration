@@ -1,0 +1,55 @@
+renwenjiaMode2(
+  (fea_conv): Sequential(
+    (0): Conv2d(3, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): ReLU(inplace)
+    (2): Conv2d(128, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+  )
+  (IMDB): SLModule_(
+    (c1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (c2): Conv2d(96, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (c3): Conv2d(96, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (c4): Conv2d(96, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (act): LeakyReLU(negative_slope=0.05, inplace)
+    (c5): Conv2d(32, 128, kernel_size=(1, 1), stride=(1, 1))
+  )
+  (deblur1): DataNet()
+  (deblur2): ResidualBlock_noBN(
+    (conv1): Conv2d(96, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (conv2): Conv2d(96, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  )
+  (hypanet): HyPaNet(
+    (mlp): Sequential(
+      (0): Conv2d(2, 96, kernel_size=(1, 1), stride=(1, 1))
+      (1): ReLU(inplace)
+      (2): Conv2d(96, 96, kernel_size=(1, 1), stride=(1, 1))
+      (3): ReLU(inplace)
+      (4): Conv2d(96, 2, kernel_size=(1, 1), stride=(1, 1))
+      (5): Softplus(beta=1, threshold=20)
+    )
+  )
+  (act): LeakyReLU(negative_slope=0.05, inplace)
+  (lr_conv): Conv2d(128, 3, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (fit_channel): Sequential(
+    (0): Conv2d(96, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): ReLU(inplace)
+    (2): Conv2d(128, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+    (3): ReLU(inplace)
+    (4): Conv2d(128, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+  )
+  (upsampler1): Sequential(
+    (0): Conv2d(128, 48, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): PixelShuffle(upscale_factor=4)
+  )
+  (upsampler2): Sequential(
+    (0): Conv2d(3, 12, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): PixelShuffle(upscale_factor=2)
+  )
+)
+
+Evaluation:
+[Set5 x4]	PSNR: 21.089 (Best: 21.089 @epoch 1)
+Forward: 0.84s
+
+Saving...
+Total: 1.16s
+
